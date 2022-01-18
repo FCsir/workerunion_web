@@ -1,26 +1,30 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <n-space vertical size="large" class="workerunion">
+    <n-layout>
+      <n-layout-header><Header/></n-layout-header>
+      <n-layout-content><Content/></n-layout-content>
+      <n-layout-footer><Footer/></n-layout-footer>
+    </n-layout>
+  </n-space>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import Header from '@/layout/Header.vue'
+import Content from '@/layout/Content.vue'
+import Footer from '@/layout/Footer.vue'
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    Header,
+    Content,
+    Footer,
   }
 }
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+.workerunion {
+  min-width: 900px;
 }
 </style>
+
