@@ -1,5 +1,9 @@
 <template>
-  <div>Logo</div>
+  <div>
+    <router-link to="/">
+      Logo
+    </router-link>
+  </div>
 </template>
 
 <script>

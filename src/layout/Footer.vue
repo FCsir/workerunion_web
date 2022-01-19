@@ -1,5 +1,5 @@
 <template>
-  <div>footer</div>
+  <div class="workerunion-footer">footer</div>
 </template>
 
 <script>
@@ -9,6 +9,8 @@ export default {
 </script>
 
 <style>
-
+.workerunion-footer {
+  text-align: center;
+}
 </style>
 

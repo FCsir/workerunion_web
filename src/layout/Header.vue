@@ -13,6 +13,7 @@
           :options="options"
           v-model:value="searchValue"
           placeholder="搜索"
+          class="nav-search-input"
         />
          <n-button type="primary" class="publish-button">发布</n-button>
       </div>
@@ -25,7 +26,7 @@
 </template>
 
 <script>
-import { computed, h, ref } from 'vue'
+import { computed, ref, h, resolveComponent} from 'vue'
 import Logo from '@/components/Logo.vue'
 import Tips from '@/components/Tips.vue'
 import ProfileMenuButton from '@/components/ProfileMenuButton.vue'
@@ -33,28 +34,55 @@ import ProfileMenuButton from '@/components/ProfileMenuButton.vue'
 const menuOptions = [
   {
     label: () =>
-      h(
-        'a',
-        {
-          href: 'https://baike.baidu.com/item/%E4%B8%94%E5%90%AC%E9%A3%8E%E5%90%9F',
-          target: '_blank',
-          rel: 'noopenner noreferrer'
-        },
-        '每日一法'
-      ),
-    key: 'hear-the-wind-sing',
+    h(
+      resolveComponent('router-link'),
+      {
+        to: {
+          name: "dailylaw",
+        }
+      },
+      {default: () => "每日一法"}
+    ),
+    key: 'dailylaw',
   },
   {
-    label: '推荐',
-    key: 'pinball',
+    label: () =>
+    h(
+      resolveComponent('router-link'),
+      {
+        to: {
+          name: "recommendation",
+        }
+      },
+      {default: () => "推荐"}
+    ),
+    key: 'recommendation',
   },
   {
-    label: '最热',
-    key: 'pinball-1973',
+    label: () =>
+    h(
+      resolveComponent('router-link'),
+      {
+        to: {
+          name: "hot",
+        }
+      },
+      {default: () => "最热"}
+    ),
+    key: 'hot',
   },
   {
-    label: '最新',
-    key: 'a-wild-sheep-chase',
+    label: () =>
+    h(
+      resolveComponent('router-link'),
+      {
+        to: {
+          name: "new",
+        }
+      },
+      {default: () => "最新"}
+    ),
+    key: 'new',
   },
 ]
 
@@ -89,7 +117,9 @@ export default {
 .worker-header {
   display: flex;
   align-items: center;
-  padding: 10px 10%;
+  padding: 10px 0;
+  width: 1000px;
+  margin: auto;
 }
 
 .nav-items, .nav-content{
@@ -110,10 +140,6 @@ export default {
   margin-right: 20px;
 }
 
-.nav-end {
-  margin-left: auto;
-}
-
 .publish-button {
   margin-left: 15px;
 }
@@ -125,6 +151,14 @@ export default {
 .nav-profile {
   display: flex;
   align-items: center;
+}
+
+.nav-search-input {
+  width: 300px;
+}
+
+.nav-end {
+  margin-left: auto;
 }
 
 @media screen and (max-width: 1024px) {

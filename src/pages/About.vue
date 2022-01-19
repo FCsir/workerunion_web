@@ -1,14 +1,11 @@
 <template>
-  <div>we</div>
+  <div>about view</div>
 </template>
 
 <script>
 
-
 export default {
-  name: 'DayilyLaw',
-  components: {
-  }
+  name: 'About',
 }
 </script>
 
