@@ -9,10 +9,8 @@ import { NConfigProvider } from 'naive-ui'
 
   const themeOverrides = {
     common: {
-      primaryColor: '#a7d7f9'
     },
     Button: {
-      textColor: '#a7d7f9'
     },
     Select: {
       peers: {

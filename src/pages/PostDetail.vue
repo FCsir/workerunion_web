@@ -1,26 +1,8 @@
 <template>
-    <n-space vertical>
-      <n-card 
-      :key="post.id"
-      v-for="post in posts"
-      size="small"
-      class="workerunion-post-card"
-      > 
-        <template #header> 
-          <div
-            class="workerunion-post-card-title"
-            @click="goToDetail(post.id)"
-          >
-            {{post.title}}
-          </div>
-        </template>
-        <div
-            class="workerunion-post-card-content"
-            @click="goToDetail(post.id)"
-        >
+  <div>
+    <div class="workerunion-post">
+      <n-card title="卡片">卡片内容
 
-          {{post.content}}
-        </div>
         <template #action >
           <div class="workerunion-post-card-action">
             <n-button-group size="tiny" strong>
@@ -52,7 +34,12 @@
           </div>
         </template>
       </n-card>
-    </n-space>
+    </div>
+
+    <div class="workerunion-post-answers">
+      answers
+    </div>
+  </div>
 </template>
 
 <script>
@@ -62,37 +49,18 @@ import {
   StarOutline as StarIcon
   } from '@vicons/ionicons5'
 
+
+
 export default {
-  name: 'PostList',
-  props: {
-    posts: Array
-  },
+  name: 'PostDetail',
   components: {
-    ChatIcon,
     StarIcon,
+    ChatIcon,
     ShareIcon,
-  },
-  methods: {
-    goToDetail (postId) {
-      console.log("go to dtail", postId)
-      this.$router.push({name: "postdetail", params: {postid: postId}})
-    }
   }
 }
 </script>
 
 <style>
-.workerunion-post-card-title {
-  cursor: pointer;
-}
-
-.workerunion-post-card-content {
-  cursor: pointer;
-}
-
-.workerunion-post-card-action {
-  display: flex;
-  justify-content: flex-end;
-}
 </style>
 

@@ -1,4 +1,4 @@
-import { createWebHashHistory, createRouter } from "vue-router";
+import { createWebHistory, createRouter } from "vue-router";
 
 import Index from "@/pages/Index.vue";
 import Layout from "@/layout/Layout.vue";
@@ -8,6 +8,9 @@ import HotPage from "@/pages/HotPage.vue";
 import NewPage from "@/pages/NewPage.vue";
 import Recommdation from "@/pages/Recommdation.vue";
 import Login from "@/pages/Login.vue";
+import PostDetail from "@/pages/PostDetail.vue";
+import Profile from "@/pages/Profile.vue";
+import PageNotFound from "@/pages/PageNotFound.vue";
 
 const routes = [
   {
@@ -44,6 +47,16 @@ const routes = [
         component: Recommdation,
         name: "recommendation",
       },
+      {
+        path: "/post/:postid",
+        component: PostDetail,
+        name: "postdetail",
+      },
+      {
+        path: "/user/:userid",
+        component: Profile,
+        name: "profile",
+      },
     ],
   },
   {
@@ -51,10 +64,11 @@ const routes = [
     component: Login,
     name: "login",
   },
+  { path: "/:catchAll(.*)", component: PageNotFound },
 ];
 
 export const router = createRouter({
   // 4. Provide the history implementation to use. We are using the hash history for simplicity here.
-  history: createWebHashHistory(),
+  history: createWebHistory(),
   routes, // short for `routes: routes`
 });

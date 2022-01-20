@@ -1,24 +1,26 @@
 <template>
-    <n-space vertical>
-      <n-card title="中卡片" size="small" > 
-        <template #header-extra> #header-extra </template>
-        卡片内容
-        <template #action> #action </template>
-      </n-card>
-      <n-card title="中卡片" size="small" > 
-        <template #header-extra> #header-extra </template>
-        卡片内容
-        <template #action> #action </template>
-      </n-card>
-    </n-space>
+<div>
+  <post-list :posts="posts"/>
+</div>
 </template>
 
 <script>
+import PostList from '@/components/PostList.vue'
 
 export default {
   name: 'Index',
   components: {
+    PostList,
   },
+  setup() {
+    return {
+      posts: [
+        {"id": 1, "content": "content", "title": "title"},
+        {"id": 2, "content": "content", "title": "title"},
+        {"id": 3, "content": "content", "title": "title"}
+      ]
+    }
+  }
 }
 </script>
 
