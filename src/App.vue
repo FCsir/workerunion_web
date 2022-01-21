@@ -1,6 +1,8 @@
 <template>
   <n-config-provider :theme-overrides="themeOverrides">
+    <n-message-provider>
       <router-view></router-view>
+      </n-message-provider>
   </n-config-provider>
 </template>
 
@@ -9,6 +11,7 @@ import { NConfigProvider } from 'naive-ui'
 
   const themeOverrides = {
     common: {
+      bodyColor: "#f6f6f6"
     },
     Button: {
     },

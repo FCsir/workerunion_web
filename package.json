@@ -11,6 +11,9 @@
     "@vicons/ionicons5": "^0.11.0",
     "core-js": "^3.6.5",
     "vue": "^3.0.0",
+    "vue-advanced-cropper": "^2.7.1",
+    "vue-avatar-cropper": "^6.0.0",
+    "vue-image-crop-upload": "^3.0.3",
     "vue-router": "^4.0.12"
   },
   "devDependencies": {
