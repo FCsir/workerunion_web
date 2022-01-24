@@ -15,7 +15,7 @@
           placeholder="搜索"
           class="nav-search-input"
         />
-         <n-button type="primary" class="publish-button">发布</n-button>
+         <n-button type="primary" class="publish-button" @click="goToWrite">发布</n-button>
       </div>
     </div>
     <div class="nav-end">
@@ -108,6 +108,11 @@ export default {
           }
           })
       })
+    }
+  },
+  methods: {
+    goToWrite() {
+      this.$router.push({name: "write-post"})
     }
   }
 }

@@ -14,20 +14,24 @@
           maxWidth: '640px'
         }"
       >
-        <n-form-item label="邮箱" path="phone">
-          <n-input placeholder="邮箱" v-model:value="formValue.phone" disabled />
+        <n-form-item label="邮箱" path="email">
+          <n-input placeholder="邮箱" v-model:value="formValue.email" disabled />
+        </n-form-item>
+        <n-form-item label="昵称" path="nickname">
+          <n-input placeholder="昵称" v-model:value="formValue.nickname" />
         </n-form-item>
         <n-form-item label="电话号码" path="phone">
           <n-input placeholder="电话号码" v-model:value="formValue.phone" />
         </n-form-item>
-        <n-form-item label="昵称" path="phone">
-          <n-input placeholder="昵称" v-model:value="formValue.phone" />
+        <n-form-item label="生日" path="birth">
+          <n-date-picker type="date" v-model:value="formValue.birth" />
         </n-form-item>
-        <n-form-item label="年龄" path="user.age">
-          <n-input placeholder="输入年龄" v-model:value="formValue.user.age" />
-        </n-form-item>
-        <n-form-item label="性别" path="user.age">
-          <n-input placeholder="性别" v-model:value="formValue.user.age" />
+        <n-form-item label="性别" path="gender">
+          <n-select
+            placeholder="性别"
+            :options="generalOptions"
+            v-model:value="formValue.gender"
+          />
         </n-form-item>
         <n-form-item class="workerunion-profile-buttons">
           <n-button @click="handleValidateClick" attr-type="button">验证</n-button>
@@ -38,9 +42,15 @@
     <div class="user-infos">
       <n-card title="动态" style="margin-bottom: 16px;">
         <n-tabs type="line">
-          <n-tab-pane name="oasis" tab="帖子">帖子</n-tab-pane>
-          <n-tab-pane name="the beatles" tab="回答">回答</n-tab-pane>
-          <n-tab-pane name="jay chou" tab="评论">评论</n-tab-pane>
+          <n-tab-pane name="post" tab="帖子">
+            <n-empty description="你什么也找不到">
+              <template #extra>
+                <n-button size="small">看看别的</n-button>
+              </template>
+            </n-empty>
+          </n-tab-pane>
+          <n-tab-pane name="answer" tab="回答">回答</n-tab-pane>
+          <n-tab-pane name="comment" tab="评论">评论</n-tab-pane>
         </n-tabs>
       </n-card>
     </div>
@@ -62,29 +72,40 @@ export default {
     return {
       formRef,
       size: ref('medium'),
+      generalOptions: [
+        {label: "男", value: "male"},
+        {label: "女", value: "female"},
+        {label: "无", value: ""},
+      ],
       formValue: ref({
-        user: {
-          name: '',
-          age: ''
-        },
-        phone: ''
+        birth: null,
+        phone: '',
+        nickname: '',
+        email: '',
+        gender: '',
       }),
       rules: {
-        user: {
-          name: {
-            required: true,
-            message: '请输入姓名',
-            trigger: 'blur'
-          },
-          age: {
-            required: true,
-            message: '请输入年龄',
-            trigger: ['input', 'blur']
-          }
+        nickname: {
+          required: true,
+          message: '请输入昵称',
+          trigger: 'blur'
+        },
+        birth: {
+          required: false,
+          message: '请选择出生日期',
+        },
+        gender: {
+          required: false,
+          message: '请选择性别',
         },
         phone: {
-          required: true,
+          required: false,
           message: '请输入电话号码',
+          validator: (rule, value) => {
+            let result = /^1[0-9]{10}$|^[569][0-9]{7}$/.test(value)
+            console.log('value', result);
+            return result;
+          },
           trigger: ['input']
         }
       },

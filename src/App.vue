@@ -15,14 +15,6 @@ import { NConfigProvider } from 'naive-ui'
     },
     Button: {
     },
-    Select: {
-      peers: {
-        InternalSelection: {
-          textColor: '#a7d7f9'
-        }
-      }
-    }
-    // ...
   }
 
 

@@ -30,7 +30,7 @@
                     <chat-icon />
                   </n-icon>
                 </template>
-                评论
+                回答
               </n-button>
               <n-button :bordered="false">
                 <template #icon>

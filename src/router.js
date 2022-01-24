@@ -8,9 +8,11 @@ import HotPage from "@/pages/HotPage.vue";
 import NewPage from "@/pages/NewPage.vue";
 import Recommdation from "@/pages/Recommdation.vue";
 import Login from "@/pages/Login.vue";
+import Register from "@/pages/Register.vue";
 import PostDetail from "@/pages/PostDetail.vue";
 import Profile from "@/pages/Profile.vue";
 import PageNotFound from "@/pages/PageNotFound.vue";
+import WritePost from "@/pages/WritePost.vue";
 
 const routes = [
   {
@@ -48,6 +50,11 @@ const routes = [
         name: "recommendation",
       },
       {
+        path: "/write",
+        component: WritePost,
+        name: "write-post",
+      },
+      {
         path: "/post/:postid",
         component: PostDetail,
         name: "postdetail",
@@ -63,6 +70,11 @@ const routes = [
     path: "/login",
     component: Login,
     name: "login",
+  },
+  {
+    path: "/register",
+    component: Register,
+    name: "register",
   },
   { path: "/:catchAll(.*)", component: PageNotFound },
 ];
