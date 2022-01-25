@@ -27,7 +27,16 @@ export default {
     return {
       themeOverrides
     }
-  }
+  },
+   watch: {
+      $route: {
+        immediate: true,
+        handler(to, from) {
+          console.log("form--", from)
+          document.title = to.meta.title || "打工者联合工会";
+        }
+      },
+    }
 }
 </script>
 
