@@ -7,6 +7,7 @@
 
 <script>
 import PostList from '@/components/PostList.vue'
+import {workerUnionInstance} from '@/request'
 
 export default {
   name: 'Index',
@@ -21,6 +22,11 @@ export default {
         {"id": 3, "content": "content", "title": "title"}
       ]
     }
+  },
+  mounted() {
+    // this.$store.commit('auth/setAccessToken', "")
+    let response = workerUnionInstance.get("/home/latest", {"tset": "test"})
+    console.log("response--------", response)
   }
 }
 </script>

@@ -53,6 +53,9 @@ const routes = [
         path: "/write",
         component: WritePost,
         name: "write-post",
+        meta: {
+          isAuthenticated: true,
+        },
       },
       {
         path: "/post/:postid",
@@ -63,6 +66,9 @@ const routes = [
         path: "/user/:userid",
         component: Profile,
         name: "profile",
+        meta: {
+          isAuthenticated: true,
+        },
       },
     ],
   },
@@ -83,4 +89,13 @@ export const router = createRouter({
   // 4. Provide the history implementation to use. We are using the hash history for simplicity here.
   history: createWebHistory(),
   routes, // short for `routes: routes`
+});
+
+router.beforeEach((to, from, next) => {
+  const isAuthenticated = to.meta.isAuthenticated;
+  const accessToken = localStorage.getItem("accessToken");
+  console.log("to---", to);
+  if (to.name != "login" && isAuthenticated && !accessToken) {
+    next({ name: "login" });
+  } else next();
 });
