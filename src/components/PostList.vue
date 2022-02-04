@@ -1,5 +1,11 @@
 <template>
     <n-space vertical>
+      <n-empty class="workerunion-posts-empty" v-if="!posts || posts.length == 0" description="你什么也找不到">
+        <template #extra>
+          <n-button size="small">发布</n-button>
+        </template>
+      </n-empty>
+
       <n-card 
       :key="post.id"
       v-for="post in posts"
@@ -16,10 +22,9 @@
         </template>
         <div
             class="workerunion-post-card-content"
+            v-html="post.content"
             @click="goToDetail(post.id)"
         >
-
-          {{post.content}}
         </div>
         <template #action >
           <div class="workerunion-post-card-action">
@@ -94,5 +99,8 @@ export default {
   display: flex;
   justify-content: flex-end;
 }
-</style>
 
+.workerunion-posts-empty {
+  margin-top: 90px;
+}
+</style>

@@ -58,6 +58,14 @@ const routes = [
         },
       },
       {
+        path: "/write/:postid",
+        component: WritePost,
+        name: "save-post",
+        meta: {
+          isAuthenticated: true,
+        },
+      },
+      {
         path: "/post/:postid",
         component: PostDetail,
         name: "postdetail",

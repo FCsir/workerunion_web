@@ -18,13 +18,13 @@
           <n-input placeholder="邮箱" v-model:value="formValue.email" disabled />
         </n-form-item>
         <n-form-item label="昵称" path="nickname">
-          <n-input placeholder="昵称" v-model:value="formValue.nickname" />
+          <n-input placeholder="昵称" v-model:value="formValue.nickname" disabled/>
         </n-form-item>
         <n-form-item label="电话号码" path="phone">
           <n-input placeholder="电话号码" v-model:value="formValue.phone" />
         </n-form-item>
         <n-form-item label="生日" path="birth">
-          <n-date-picker type="date" v-model:value="formValue.birth" />
+          <n-date-picker type="date" v-model:value="formValue.birth" value-format="yyyy-MM-dd"/>
         </n-form-item>
         <n-form-item label="性别" path="gender">
           <n-select
@@ -34,7 +34,7 @@
           />
         </n-form-item>
         <n-form-item class="workerunion-profile-buttons">
-          <n-button @click="handleValidateClick" attr-type="button">验证</n-button>
+          <n-button @click="saveProfile" attr-type="button">保存</n-button>
         </n-form-item>
       </n-form>
       </n-card>
@@ -60,6 +60,8 @@
 <script>
 import { ref } from 'vue'
 import { useMessage } from 'naive-ui'
+import {workerUnionInstance} from '@/request'
+import moment from 'moment'
 import 'vue-advanced-cropper/dist/style.css';
 
 
@@ -68,6 +70,14 @@ export default {
   setup() {
     const formRef = ref(null)
     const message = useMessage()
+    const formValue = ref({
+        id: null,
+        birth: null,
+        phone: '',
+        nickname: '',
+        email: '',
+        gender: '',
+      })
 
     return {
       formRef,
@@ -77,13 +87,7 @@ export default {
         {label: "女", value: "female"},
         {label: "无", value: ""},
       ],
-      formValue: ref({
-        birth: null,
-        phone: '',
-        nickname: '',
-        email: '',
-        gender: '',
-      }),
+      formValue,
       rules: {
         nickname: {
           required: true,
@@ -102,6 +106,9 @@ export default {
           required: false,
           message: '请输入电话号码',
           validator: (rule, value) => {
+            if (!value) {
+              return true;
+            }
             let result = /^1[0-9]{10}$|^[569][0-9]{7}$/.test(value)
             console.log('value', result);
             return result;
@@ -109,17 +116,49 @@ export default {
           trigger: ['input']
         }
       },
-      handleValidateClick () {
+      saveProfile () {
         formRef.value.validate((errors) => {
           if (!errors) {
-            message.success('Valid')
+            workerUnionInstance.post("/user/save_profile", {
+              "id": formValue.value.id,
+              "phone": formValue.value.phone,
+              "birth": formValue.value.birth,
+              "gender": formValue.value.gender
+            }).then(response => {
+              console.log("----response", response)
+            })
           } else {
             console.log(errors)
-            message.error('Invalid')
+            message.error("请正确填写信息")
           }
         })
       }
     }
+  },
+  methods: {
+    loadUserProfile() {
+      console.log("load user profile");
+      let vm = this
+      workerUnionInstance.get('/user/profile').then(response => {
+        console.log("response---", response)
+        const responsedata = response.data;
+        const data = responsedata.data
+        console.log("data---", moment(data.birth).unix())
+        vm.formValue = {
+        id: data.id,
+        birth: data.birth ? moment(data.birth).unix() * 1000: null,
+        phone: data.phone,
+        nickname: data.nickname,
+        email: data.email,
+        gender: data.gender,
+        }
+      }).catch(error => {
+        console.log("erro---", error)
+      })
+    }
+  },
+  mounted() {
+    this.loadUserProfile();
   }
 
 }

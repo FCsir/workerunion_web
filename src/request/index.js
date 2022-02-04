@@ -1,3 +1,4 @@
+import { router } from "@/router";
 import axios from "axios";
 
 const workerUnionInstance = axios.create({
@@ -14,7 +15,7 @@ workerUnionInstance.interceptors.request.use(
     return config;
   },
   (error) => {
-    return Promise.error(error);
+    return Promise.reject(error);
   }
 );
 
@@ -23,7 +24,10 @@ workerUnionInstance.interceptors.response.use(
     return response;
   },
   (error) => {
-    return Promise.error(error);
+    if (error.response.status == 401) {
+      router.push("/login");
+    }
+    return Promise.reject(error);
   }
 );
 

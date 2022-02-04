@@ -1,12 +1,12 @@
 <template>
 <div>
   <post-list :posts="posts"/>
-  
 </div>
 </template>
 
 <script>
 import PostList from '@/components/PostList.vue'
+import {ref} from 'vue';
 import {workerUnionInstance} from '@/request'
 
 export default {
@@ -15,18 +15,19 @@ export default {
     PostList,
   },
   setup() {
+    const postsRef = ref();
     return {
-      posts: [
-        {"id": 1, "content": "content", "title": "title"},
-        {"id": 2, "content": "content", "title": "title"},
-        {"id": 3, "content": "content", "title": "title"}
-      ]
+      posts: postsRef
     }
   },
   mounted() {
+    let vm = this;
     // this.$store.commit('auth/setAccessToken', "")
-    let response = workerUnionInstance.get("/home/latest", {"tset": "test"})
-    console.log("response--------", response)
+    workerUnionInstance.get("/home/recommend").then(response => {
+      const data = response.data;
+      const posts = data.data;
+      vm.posts = posts;
+    })
   }
 }
 </script>

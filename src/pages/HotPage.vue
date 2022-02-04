@@ -6,7 +6,9 @@
 </template>
 
 <script>
+import {ref} from 'vue'
 import PostList from '@/components/PostList.vue'
+import {workerUnionInstance} from '@/request'
 
 export default {
   name: 'HotPage',
@@ -14,13 +16,18 @@ export default {
     PostList,
   },
   setup() {
+    const postsRef = ref();
     return {
-      posts: [
-        {"id": 1, "content": "content", "title": "title"},
-        {"id": 2, "content": "content", "title": "title"},
-        {"id": 3, "content": "content", "title": "title"}
-      ]
+      posts: postsRef
     }
+  },
+  mounted() {
+    let vm = this;
+    workerUnionInstance.get("/home/popular").then(response => {
+      const data = response.data;
+      const posts = data.data;
+      vm.posts = posts;
+    })
   }
 }
 </script>

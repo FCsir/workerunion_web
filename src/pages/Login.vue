@@ -22,7 +22,7 @@
             <n-input placeholder="密码" type="password" v-model:value="formValue.password" />
           </n-form-item>
           <n-form-item class="workerunion-profile-buttons">
-            <n-button type="primary" @click="handleValidateClick" attr-type="button" block>登录</n-button>
+            <n-button type="primary" @click="login" attr-type="button" block >登录</n-button>
           </n-form-item>
         </n-form>
       </n-card>
@@ -52,6 +52,8 @@
 
 <script>
 import {ref} from 'vue';
+import {workerUnionInstance} from '@/request'
+import { useMessage } from 'naive-ui'
 
 export default {
   name: 'Login',
@@ -67,6 +69,7 @@ export default {
       formRef,
       size: ref('medium'),
       formValue,
+      messageUtil: useMessage(),
       rules: {
         email: {
           required: true,
@@ -80,6 +83,28 @@ export default {
           }
         ],
       },
+    }
+  },
+  methods: {
+    login() {
+      this.formRef.validate(async (errors) => {
+        if (!errors) {
+          workerUnionInstance.post("/auth/login", {
+            email: this.formValue.email,
+            password: this.formValue.password,
+          }).then((response) => {
+            if (response.status == 200) {
+              const accessToken = response.data.token 
+              localStorage.setItem("accessToken", accessToken)
+              this.$router.push("/");
+            }
+          }).catch(error => {
+            const data = error.response.data.message;
+            this.messageUtil.error(data, {duration: 3000})
+          })
+           
+        }
+      })
     }
   }
 }
